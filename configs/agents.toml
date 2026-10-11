@@ -1,0 +1,47 @@
+# Paid AI calls are disabled by default. API keys never belong in this file.
+# To opt in later: set enabled=true, choose an exact current model name,
+# enter current per-million token prices, and set ANTHROPIC_API_KEY in Windows.
+
+[model_budget]
+maximum_total_cost_usd = 0.25
+maximum_input_tokens = 25000
+maximum_output_tokens = 5000
+
+[providers.anthropic]
+enabled = false
+model_name = ""
+timeout_seconds = 60
+maximum_output_tokens = 500
+input_cost_per_million_usd = 0.0
+output_cost_per_million_usd = 0.0
+maximum_cost_per_request_usd = 0.03
+
+[agents.atlas]
+provider = "disabled"
+
+[agents.vega]
+provider = "disabled"
+
+[agents.nova]
+provider = "disabled"
+
+[agents.chronos]
+provider = "disabled"
+
+[agents.iris]
+provider = "disabled"
+
+[agents.sentinel]
+provider = "disabled"
+
+[agents.aegis]
+provider = "disabled"
+
+[agents.oracle]
+provider = "disabled"
+
+[agents.echo]
+provider = "disabled"
+
+[agents.forge]
+provider = "disabled"

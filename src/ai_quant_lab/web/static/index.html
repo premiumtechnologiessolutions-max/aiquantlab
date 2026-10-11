@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="aiql-session" content="__SESSION_TOKEN__">
+  <title>AI Quant Lab — غرفة التحكم</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">AI QUANT LAB</p>
+      <h1>غرفة التحكم الصوتية</h1>
+      <p class="subtitle">راقب السوق، اسأل الوكلاء، وتابع التجارب من مكان واحد.</p>
+    </div>
+    <div class="safety-pill"><span></span> Demo / Research فقط</div>
+  </header>
+
+  <main class="layout">
+    <section class="panel account-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">METATRADER 5</p>
+          <h2>حساب الـDemo</h2>
+        </div>
+        <span id="mt5-badge" class="badge offline">غير موصول</span>
+      </div>
+      <div id="account-details" class="metrics-grid muted-box">
+        وصّل MT5 حتى تظهر بيانات الحساب الحقيقية.
+      </div>
+      <div class="button-row">
+        <button id="connect-mt5" class="button primary">وصّل الحساب</button>
+        <button id="disconnect-mt5" class="button secondary">افصل</button>
+        <button id="scan-market" class="button secondary">افحص السوق الآن</button>
+      </div>
+      <p id="monitor-error" class="error-text"></p>
+    </section>
+
+    <section class="panel market-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">LIVE MONITOR</p>
+          <h2>آخر قراءة للسوق</h2>
+        </div>
+        <span id="scan-time" class="soft-label">لا يوجد فحص</span>
+      </div>
+      <div id="market-snapshot" class="market-empty">بعد ما في بيانات Live مسجّلة.</div>
+    </section>
+
+    <section class="panel institutional-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">QUANT COMMAND CENTER</p>
+          <h2>دورة البحث المؤسساتية</h2>
+        </div>
+        <span id="research-state" class="badge offline">بانتظار أول شمعة</span>
+      </div>
+      <div class="button-row research-controls">
+        <button id="research-start" class="button primary">شغّل البحث المستمر</button>
+        <button id="research-pause" class="button secondary">إيقاف مؤقت</button>
+        <button id="research-emergency" class="button danger">إيقاف طارئ</button>
+        <button id="research-reset" class="button ghost">فك الإيقاف الطارئ</button>
+      </div>
+      <p id="research-control-reason" class="team-progress"></p>
+      <div id="research-headline" class="metrics-grid research-headline"></div>
+      <div class="research-columns">
+        <div>
+          <p class="soft-heading">سلسلة التسليم بين الـAgents</p>
+          <div id="research-stages" class="stage-list"></div>
+        </div>
+        <div>
+          <p class="soft-heading">Experiment Registry</p>
+          <div id="registry-counts" class="registry-grid"></div>
+          <p class="soft-heading recent-title">آخر الحملات</p>
+          <div id="recent-campaigns" class="recent-campaigns"></div>
+        </div>
+      </div>
+      <p class="safety-note">كل حملة تبدأ عند شمعة مكتملة جديدة. لا Paper ولا Champion ولا أي أمر Broker من دون موافقة بشرية.</p>
+    </section>
+
+    <section class="panel team-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">AGENT TEAM</p>
+          <h2>الفريق</h2>
+        </div>
+        <button id="runtime-tick" class="button ghost">شغّل دورة عمل</button>
+      </div>
+      <p id="team-progress" class="team-progress"></p>
+      <div id="agent-grid" class="agent-grid"></div>
+      <section id="agent-detail" class="agent-detail" hidden aria-live="polite">
+        <div class="agent-detail-heading">
+          <div>
+            <p class="eyebrow">AGENT DETAIL</p>
+            <h3 id="agent-detail-name">تفاصيل الـAgent</h3>
+          </div>
+          <button id="agent-detail-close" type="button" class="button ghost">إغلاق</button>
+        </div>
+        <p id="agent-detail-role" class="team-progress"></p>
+        <div id="agent-detail-metrics" class="metrics-grid"></div>
+        <div class="agent-detail-columns">
+          <div>
+            <p class="soft-heading">المهام والنتائج والأخطاء</p>
+            <div id="agent-detail-tasks" class="agent-history"></div>
+          </div>
+          <div>
+            <p class="soft-heading">التسليم والرسائل</p>
+            <div id="agent-detail-messages" class="agent-history"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="panel strategy-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">RESEARCH ENGINE</p>
+          <h2>الاستراتيجيات والتجارب</h2>
+        </div>
+        <span id="strategy-count" class="soft-label">0 استراتيجية</span>
+      </div>
+      <div id="campaign-summary" class="campaign-summary muted-box">
+        شغّل Research Campaign من الطرفية حتى تظهر المقارنة هون.
+      </div>
+      <div id="strategy-list" class="strategy-list"></div>
+      <details class="blueprint-details">
+        <summary id="blueprint-count">مكتبة العائلات المؤسساتية</summary>
+        <div id="blueprint-list" class="blueprint-list"></div>
+      </details>
+    </section>
+
+    <section class="panel chat-panel">
+      <div class="panel-heading chat-heading">
+        <div>
+          <p class="eyebrow">VOICE CONSOLE</p>
+          <h2>احكي مع الوكلاء</h2>
+        </div>
+        <div id="voice-support" class="soft-label">فحص الميكروفون…</div>
+      </div>
+      <div id="conversation" class="conversation" aria-live="polite">
+        <div class="message agent-message">
+          <span>Atlas</span>
+          أنا حاضر. قل مثلًا: «يا Atlas شو وضع الفريق؟» أو «يا Iris شو حالة السوق؟»
+        </div>
+      </div>
+      <form id="chat-form" class="composer">
+        <button type="button" id="microphone" class="mic-button" aria-label="ابدأ التسجيل">🎙</button>
+        <input id="chat-input" type="text" autocomplete="off" maxlength="4000"
+               placeholder="نادِ الـAgent باسمه واسأله…">
+        <button type="submit" class="send-button">إرسال</button>
+      </form>
+      <label class="voice-toggle">
+        <input id="speak-replies" type="checkbox" checked>
+        اقرأ جواب الـAgent بصوت مرتفع
+      </label>
+      <label class="voice-toggle">
+        <input id="always-listen" type="checkbox" checked>
+        استماع مستمر — اضغط 🎙 مرة واحدة ثم نادِ اسم الـAgent
+      </label>
+      <p id="voice-detail" class="voice-detail">
+        المتصفح يطلب ضغطة أولى لحماية الميكروفون، وبعدها يعيد تشغيل الاستماع تلقائيًا.
+      </p>
+    </section>
+
+    <details class="panel advanced-panel">
+      <summary>تنفيذ أمر يدوي على حساب Demo — إعداد متقدم</summary>
+      <p class="warning-copy">
+        لا يعمل إلا إذا كان الحساب Demo وتم تفعيل AI_QUANT_ENABLE_DEMO_ORDERS.
+        الحساب الحقيقي مرفوض برمجيًا.
+      </p>
+      <form id="order-form" class="order-grid">
+        <label>الزوج <select name="pair"><option>EURUSD</option><option>GBPUSD</option><option>USDJPY</option><option>USDCHF</option><option>USDCAD</option><option>AUDUSD</option><option>NZDUSD</option></select></label>
+        <label>الاتجاه <select name="side"><option value="buy">شراء</option><option value="sell">بيع</option></select></label>
+        <label>الحجم <input name="volume_lots" type="number" min="0.01" max="0.10" step="0.01" value="0.01"></label>
+        <label>Stop Loss points <input name="stop_loss_points" type="number" min="1" value="100"></label>
+        <label>Take Profit points <input name="take_profit_points" type="number" min="1" value="150"></label>
+        <label>اكتب DEMO ONLY <input name="confirmation" autocomplete="off"></label>
+        <button type="submit" class="button danger">إرسال أمر Demo</button>
+      </form>
+      <p id="order-result" class="soft-label"></p>
+    </details>
+  </main>
+
+  <footer>يعمل محليًا على جهازك • لا يرسل كلمات مرور MT5 إلى المتصفح أو أي خدمة خارجية</footer>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

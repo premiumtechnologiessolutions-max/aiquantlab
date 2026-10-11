@@ -1,0 +1,23 @@
+project_name = "AI Quant Lab"
+mode = "research"
+timezone = "UTC"
+data_dir = "data"
+
+pairs = [
+    "EURUSD",
+    "GBPUSD",
+    "USDJPY",
+    "USDCHF",
+    "USDCAD",
+    "AUDUSD",
+    "NZDUSD"
+]
+
+timeframes = [
+    "M1",
+    "M5",
+    "M15",
+    "H1",
+    "H4",
+    "D1"
+]
