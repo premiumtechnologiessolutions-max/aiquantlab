@@ -6,6 +6,7 @@ from datetime import UTC, datetime, timedelta
 import pytest
 
 from ai_quant_lab.backtesting import BacktestConfig, run_backtest
+from ai_quant_lab.broker import (DemoGatewayConfig, DemoOrderIntent, DemoTradingBlockedError, MT5DemoGateway)
 from ai_quant_lab.data.models import MarketBar
 from ai_quant_lab.simulation import (
     MarketQuote, SimulationLedger, SimulationMode, SimulationPolicy, SimulationStatus,
@@ -112,3 +113,15 @@ def test_fx_legacy_defaults_remain_valid() -> None:
     result = run_backtest(bars, BuyAndHold())
     assert result.metrics.trade_count == 1
     assert result.trades[0].costs > 0
+
+
+def test_gold_demo_broker_orders_remain_blocked(tmp_path) -> None:
+    gateway = MT5DemoGateway(
+        config=DemoGatewayConfig(audit_database=tmp_path / "audit.sqlite3")
+    )
+    intent = DemoOrderIntent(
+        pair="XAUUSD", side="buy", volume_lots=0.01,
+        stop_loss_points=200, take_profit_points=200,
+    )
+    with pytest.raises(DemoTradingBlockedError, match="XAUUSD MT5 demo order sending is blocked"):
+        gateway.place_market_order(intent, confirmation="DEMO ONLY")
