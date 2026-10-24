@@ -108,7 +108,19 @@ class SimulationLedger:
         if requested_units <= 0:
             raise ValueError("Requested simulation units must be greater than zero.")
 
-        # Paper/shadow XAUUSD is expressed in ounces, not FX base units.\n        # Never silently convert the default FX point_size to a gold point.\n        if pair == "XAUUSD" and (\n            policy is None or "point_size" not in policy.model_fields_set\n        ):\n            raise ValueError(\n                "XAUUSD simulation requires explicit SimulationPolicy point_size "\n                "from the broker symbol specification."\n            )\n\n        resolved_policy = policy or SimulationPolicy(\n            point_size=(0.001 if pair.endswith("JPY") else 0.00001)\n        )
+        # Paper/shadow XAUUSD is expressed in ounces, not FX base units.
+        # Never silently convert the default FX point_size to a gold point.
+        if pair == "XAUUSD" and (
+            policy is None or "point_size" not in policy.model_fields_set
+        ):
+            raise ValueError(
+                "XAUUSD simulation requires explicit SimulationPolicy point_size "
+                "from the broker symbol specification."
+            )
+
+        resolved_policy = policy or SimulationPolicy(
+            point_size=(0.001 if pair.endswith("JPY") else 0.00001)
+        )
         resolved_limits = risk_limits or RiskLimits()
         now = observed_at or datetime.now(UTC)
         quote_age = (now - quote.timestamp).total_seconds()
