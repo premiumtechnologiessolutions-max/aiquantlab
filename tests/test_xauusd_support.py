@@ -46,6 +46,8 @@ def test_gold_cannot_inherit_forex_quantity_and_point_defaults() -> None:
         run_backtest(bars, BuyAndHold(), BacktestConfig(point_size=0.01))
     with pytest.raises(ValueError, match="explicit BacktestConfig"):
         run_backtest(bars, BuyAndHold(), BacktestConfig(quantity=2))
+    with pytest.raises(ValueError, match="explicit BacktestConfig"):
+        run_backtest(bars, BuyAndHold(), BacktestConfig(quantity=2, point_size=None))
 
 
 def test_gold_backtest_costs_are_dollars_per_ounce_times_ounces() -> None:
