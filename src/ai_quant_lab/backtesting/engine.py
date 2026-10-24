@@ -29,8 +29,7 @@ def run_backtest(
     if len(bars) < 2:
         raise ValueError("A backtest requires at least two market bars.")
 
-    resolved_config = config or BacktestConfig()
-    signals = strategy.generate_signals(bars)
+    # XAUUSD requires explicit broker tick size and ounce exposure. The FX defaults\n    # (10,000 units and a 0.00001 point) are unsafe/misleading for gold.\n    if bars[0].pair == "XAUUSD" and (\n        config is None\n        or not {"quantity", "point_size"}.issubset(config.model_fields_set)\n    ):\n        raise ValueError(\n            "XAUUSD research requires explicit BacktestConfig quantity (troy ounces) "\n            "and point_size (broker price increment); verify contract economics."\n        )\n\n    resolved_config = config or BacktestConfig()\n    signals = strategy.generate_signals(bars)
 
     if len(signals) != len(bars):
         raise ValueError("A strategy must return exactly one signal per bar.")
@@ -167,7 +166,7 @@ def annualization_periods(timeframe: Timeframe) -> int:
 def _default_point_size(pair: str) -> float:
     """Return the conventional broker point size for five/three-digit FX."""
 
-    return 0.001 if pair.endswith("JPY") else 0.00001
+    if pair == "XAUUSD":\n        # A broker-specific value is mandatory through BacktestConfig; this\n        # fallback prevents accidental use of the FX five-decimal convention.\n        return 0.01\n    return 0.001 if pair.endswith("JPY") else 0.00001
 
 
 def _execution_cost(
