@@ -31,3 +31,14 @@ Standalone research code and exact M15 cache were packaged as `no_risk_fx_discov
 Native CLI and MarketBar currently model mid-OHLC plus spread points, not exact bid/ask extrema; native backtest must NOT be assumed equivalent to standalone bid/ask stop simulator. Before approving a gold strategy, define the broker's gold price increment, contract size, lot mapping, commission, swaps, calendar and rollover, and construct a genuinely prospective validation sample. Profit every month cannot be guaranteed.
 
 Decision: **0 confirmed new strategies**; gold native integration is staged and guarded but remains unmerged/unverified by CI.
+
+
+## Staged canonical gold quote-data bridge (new)
+
+- Added `scripts/gold_m15_to_canonical_csv.py`, which reads the user's **trusted** local 397,299-bar M15 pickle and produces the validated core CSV columns plus separate ask OHLC and source-M1-count columns.
+- Explicit broker `--point-size` is mandatory; **0.01 was an illustrative assumption only** in the test run. `tick_volume=0` means UNKNOWN in exported CSV, since the raw JSON `v` field is not verified as trade or tick volume, and M15 cache `ts` is a bar count.
+- New `tests/test_gold_m15_bridge.py` checks bid/ask preservation, cost-point conversion, rejecting invalid point sizes and negative spreads. The staged CI workflow now includes this file.
+- The independent local research package's **8/8 tests passed** (including two converter tests); 397,299-row CSV generated and verified; archive unpacked and replayed independently with matching trial results.
+- No new native GitHub CI completion was confirmed, so we **do not claim** the native tests passed.
+
+Example (after extracting the trusted research cache): `python scripts/gold_m15_to_canonical_csv.py gold_m15.pkl gold_m15_for_lab.csv --point-size 0.01` — substitute actual symbol point size.
