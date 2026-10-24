@@ -23,4 +23,4 @@ jobs:
       - name: Install research package and test tools
         run: python -m pip install -e ".[dev]"
       - name: Run research regression tests
-        run: python -m pytest -q tests/test_xauusd_support.py tests/test_research_mvp.py tests/test_simulation.py
+        run: python -m pytest -q tests/test_xauusd_support.py tests/test_gold_m15_bridge.py tests/test_research_mvp.py tests/test_simulation.py
