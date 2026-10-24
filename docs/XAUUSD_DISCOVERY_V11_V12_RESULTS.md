@@ -16,7 +16,7 @@ User archive: 17 annual XAUUSD bid/ask files, 397,299 aggregated M15 bars from 2
 - Cost stress: at 3× slip/fee +12.78 R; at 5× slip/fee +0.87 R. Hypothetical $0.25/oz/calendar 24h carry: +21.63 R vs +24.68 R (not a real swap quote).
 - 120 past-signal time-shift placebo runs put realized net R at ~95th percentile of those controls; **not a calibrated significance test**. 10,000 three-month circular monthly-block historical bootstrap runs gave approximate net-R 95% interval **−5.03 to +54.63**, including loss.
 
-Other family representatives lost on validation: weekly sweep −6.96 R; weekly retest −16.40 R; squeeze breakout −37.81 R (2018–21).
+Across all 216 trials, 8 parameter rows satisfy the confirmation gate considered by itself, but every one had negative 2010–2017 development R (−16.96R or worse), with duplicate-like variants; zero passed development-positive AND confirmation gates. Selecting these rows now would be confirmation-data snooping.\n\nOther family representatives lost on validation: weekly sweep −6.96 R; weekly retest −16.40 R; squeeze breakout −37.81 R (2018–21).
 
 ## Discovery 12
 Reimplemented a **single-position netting research simulator** for two locked models (V4 z-score continuation and new weekly breakout). One open position total; cancel simultaneous opposite intents; entering on following M15 open; individual exit timelines retained. V4-only and weekly-only trade ledgers replay exactly the earlier independent simulator (numeric equality tests).
