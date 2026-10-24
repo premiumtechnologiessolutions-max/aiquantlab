@@ -29,3 +29,9 @@ Seven new deterministic unit tests all passed: monthly lag, confirmation timing,
 **972 newly evaluated parameter rows; no promotion.** A full executable research ZIP with M15 quote cache, source Python, all trials, monthly/yearly tables, SHA256 and test logs was delivered in the project conversation (Session 4). This branch records research; it still does not integrate gold into `aiquantlab`'s native FX-only core. Do not merely add XAUUSD to `ForexPair`: the engine's default forex point size is 0.00001 for non-JPY, which would silently misrepresent gold transaction costs. Native integration requires explicit broker instrument specifications and gold-specific margin/swap economics, then truly prospective shadow data.
 
 No strategy can guarantee a profitable result every calendar month.
+
+### Additional historical quote audit
+
+No negative M15 opening bid/ask spreads or invalid bid/ask OHLC envelopes were found. Median opening spread was $0.34/oz and p99 $1.22/oz; 140 bars exceeded $5/oz. The dataset contains 6,091 Sunday bars, 88 bars on Jan 1 2010, 3,922 gaps exceeding 30 minutes and 887 gaps exceeding 24 hours (maximum 76.5 hours). Some gaps are regular market closures; broker-session rules still need verification. No promises of future execution realism follow from this audit.
+
+Reproducibility: the Session 4 research ZIP was verified and replayed after unpacking; its 7/7 regression tests passed independently. The archive contains M15 quote cache and experimental code, **not** live broker connections or native FX engine integration.
