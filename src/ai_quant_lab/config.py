@@ -16,6 +16,7 @@ ForexPair = Literal[
     "USDCAD",
     "AUDUSD",
     "NZDUSD",
+    "XAUUSD",  # Gold spot: quote currency is USD per troy ounce, NOT an FX pip.
 ]
 
 Timeframe = Literal["M1", "M5", "M15", "H1", "H4", "D1"]
