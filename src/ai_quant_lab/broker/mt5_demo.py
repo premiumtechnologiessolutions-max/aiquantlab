@@ -626,6 +626,14 @@ class MT5DemoGateway:
     ) -> DemoOrderReceipt:
         """Check and send one explicitly armed order to a verified demo account."""
 
+        # Symbol activation for RESEARCH does not constitute lot/margin approval.
+        # Gold live/demo order conversion must be broker-calibrated separately.
+        if intent.pair == "XAUUSD":
+            raise DemoTradingBlockedError(
+                "XAUUSD MT5 demo order sending is blocked until broker-specific "
+                "contract size, point value, margin and stops are validated."
+            )
+
         account = self._require_connection()
 
         if not self.config.demo_orders_enabled:
