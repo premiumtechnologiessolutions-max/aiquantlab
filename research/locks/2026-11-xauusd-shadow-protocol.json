@@ -1,0 +1,29 @@
+{
+  "name": "November 2026 XAUUSD forward SHADOW protocol",
+  "written_for_date": "2026-10-24",
+  "base_archive_end_utc": "2026-09-20 23:45:00+00:00",
+  "base_m15_pickle_sha256": "4e1e39e433718da0bd92f48b0f36fc1c55339ca98b699735d8379a57a8640d71",
+  "locked_meta_allocator_sha256": "12e94d5726f29676d15a312eeca049089645d0bc7c44947b367dc05954bcfbfd",
+  "locked_selection_sha256": "b4436589f0b36b44ad2b08b917768ab91577785f46228db967062d33621779c5",
+  "locked_source_sha256": {
+    "discovery3.py": "3b7751a0b4253915f446e26bce0ac613db73e7cddfd8bf204befeeace832ecc5",
+    "discovery4.py": "d89feeb7ee6f46ab7baf41165346236d214101c1fa098ade88557118f3206d25",
+    "discovery11_weekly.py": "3d697ca12a527b25ff6fa2957093def44fc5c117a0cb37d61f64eadae9dfdba0",
+    "discovery20_risk_adaptive.py": "493e6e6343c49c160813edcd8572ea18687eabf86bc91acc12d14d6b1697dfbe"
+  },
+  "forward_gate_sha256": "f45f8edccc264361b058ee373b1c8847d43d125f1c21712698f2a45d4cacf989",
+  "shadow_only": true,
+  "orders_allowed": false,
+  "approved_strategy": false,
+  "illustrative_policy_id": 10,
+  "locked_alternatives": [
+    0,
+    1
+  ],
+  "requires_missing_september_2026": true,
+  "october_complete_for_regime_reference": true,
+  "november_complete_before_scoring": true,
+  "no_optimizing_on_2022_through_2026": true,
+  "broker_funding_model_verified": false,
+  "quote_coverage_proxy": "At least 64 M15 bid/ask bars early+late UTC, every weekday 2026-09-21..2026-11-30"
+}
