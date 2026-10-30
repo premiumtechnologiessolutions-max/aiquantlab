@@ -104,8 +104,10 @@ def export_nova_hypothesis(
     if len(serialized) > MAX_RECORD_BYTES:
         raise ValueError("Nova export exceeds contract limit")
     fd: int | None = None
+    created_by_us = False
     try:
         fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        created_by_us = True
         with os.fdopen(fd, "wb") as out:
             fd = None
             out.write(serialized)
@@ -114,9 +116,9 @@ def export_nova_hypothesis(
     except BaseException:
         if fd is not None:
             os.close(fd)
-        # On an I/O error the created file is incomplete; never present it
-        # as immutable experiment evidence.
-        if path.is_file():
+        # A concurrent creator might win the O_EXCL race. Never delete
+        # someone else's newly created destination during our cleanup.
+        if created_by_us and path.is_file():
             path.unlink()
         raise
     return path
