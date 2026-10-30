@@ -184,3 +184,19 @@ def test_readonly_export_does_not_touch_source_sqlite_pages(tmp_path):
     before = db.read_bytes()
     export_nova_hypothesis(db, "hypothesis_12345678", output)
     assert db.read_bytes() == before
+
+
+def test_exclusive_creation_race_does_not_delete_concurrent_owners_file(tmp_path, monkeypatch):
+    import ai_quant_lab.integrations.noriskfx_export as exporter
+    db, output = setup(tmp_path)
+
+    def race_open(*args, **kwargs):
+        # Simulate another process creating the same path between the
+        # initial exists() preflight and os.open(O_EXCL).
+        output.write_text("concurrent owner", encoding="utf-8")
+        raise FileExistsError("path acquired by concurrent writer")
+
+    monkeypatch.setattr(exporter.os, "open", race_open)
+    with pytest.raises(FileExistsError):
+        exporter.export_nova_hypothesis(db, "hypothesis_12345678", output)
+    assert output.read_text(encoding="utf-8") == "concurrent owner"
