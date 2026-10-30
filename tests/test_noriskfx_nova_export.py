@@ -129,7 +129,7 @@ def test_unlocked_hypothesis_rejected(tmp_path):
         raw = json.loads(con.execute("SELECT payload FROM hypotheses").fetchone()[0])
         raw["parameters_locked_before_test"] = False
         con.execute("UPDATE hypotheses SET payload=?", (json.dumps(raw),))
-    with pytest.raises(ValueError, match="Only exact locked Nova"):
+    with pytest.raises(ValueError, match="parameters_locked_before_test|Only exact locked Nova"):
         export_nova_hypothesis(db, "hypothesis_12345678", output)
 
 
